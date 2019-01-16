@@ -19,7 +19,7 @@ type User struct {
 
 const usersEndpointURL = "https://jsonplaceholder.typicode.com/users"
 
-var errNotFound = errors.New("user not found")
+var errUserNotFound = errors.New("user not found")
 
 func main() {
 	// GET /users/:id
@@ -58,7 +58,7 @@ func showUserHandler(w http.ResponseWriter, r *http.Request) {
 	user, err := getUser(id)
 	if err != nil {
 		status := http.StatusInternalServerError
-		if err == errNotFound {
+		if err == errUserNotFound {
 			status = http.StatusNotFound
 		}
 		errResponse(w, err, status)
@@ -100,7 +100,7 @@ func getUser(id int) (*User, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusNotFound {
-		return nil, errNotFound
+		return nil, errUserNotFound
 	}
 
 	var u User
