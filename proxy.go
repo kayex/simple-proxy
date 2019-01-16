@@ -23,7 +23,7 @@ var errUserNotFound = errors.New("user not found")
 
 func main() {
 	// GET /users/:id
-	http.HandleFunc("/users/", showUserHandler)
+	http.HandleFunc("/users/", userHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -35,7 +35,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
-func showUserHandler(w http.ResponseWriter, r *http.Request) {
+func userHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 	case http.MethodOptions:
